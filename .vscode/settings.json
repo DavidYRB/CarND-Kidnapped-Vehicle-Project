@@ -1,0 +1,11 @@
+{
+    "C_Cpp.errorSquiggles": "Enabled",
+    "files.associations": {
+        "array": "cpp",
+        "iterator": "cpp",
+        "string": "cpp",
+        "vector": "cpp",
+        "__split_buffer": "cpp",
+        "deque": "cpp"
+    }
+}

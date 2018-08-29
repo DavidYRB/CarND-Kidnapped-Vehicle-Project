@@ -78,9 +78,9 @@ int main()
 			         // Predict the vehicle's next state from previous (noiseless control) data.
 		  	     double previous_velocity = std::stod(j[1]["previous_velocity"].get<std::string>());
 			       double previous_yawrate = std::stod(j[1]["previous_yawrate"].get<std::string>());
-
+             //std::cout << "v: " << previous_velocity << "\t yaw: " << previous_yawrate << '\n';
 			       pf.prediction(delta_t, sigma_pos, previous_velocity, previous_yawrate);
-             std::cout << "Prediction done" << '\n';
+             //std::cout << "Prediction done" << '\n';
           }
 
 		  // receive noisy observation data from the simulator
@@ -112,14 +112,13 @@ int main()
         }
 
 		  // Update the weights and resample
-		  pf.updateWeights(sensor_range, sigma_landmark, noisy_observations, map);
-      std::cout << "Update weights done" << '\n';
-      pf.resample();
-      std::cout << "Resample done" << '\n';
+		    pf.updateWeights(sensor_range, sigma_landmark, noisy_observations, map);
+      //std::cout << "Update weights done" << '\n';
+        pf.resample();
+      // std::cout << "Resample done" << '\n';
 		  // Calculate and output the average weighted error of the particle filter over all time steps so far.
 		  vector<Particle> particles = pf.particles;
 		  int num_particles = particles.size();
-      cout<< "particle size: " << num_particles << endl;
 		  double highest_weight = -1.0;
 		  Particle best_particle;
 		  double weight_sum = 0.0;
@@ -138,6 +137,7 @@ int main()
           msgJson["best_particle_x"] = best_particle.x;
           msgJson["best_particle_y"] = best_particle.y;
           msgJson["best_particle_theta"] = best_particle.theta;
+          // std::cout << "x: " << best_particle.x << " y: " << best_particle.y << " theta: " << best_particle.theta << '\n';
 
           //Optional message data used for debugging particle's sensing and associations
           msgJson["best_particle_associations"] = pf.getAssociations(best_particle);
